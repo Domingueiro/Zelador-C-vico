@@ -38,4 +38,4 @@ O Zelador Cívico propõe uma **Evolução da Representação**. O objetivo é e
 ## 📝 Licença e Autoria
 Este projeto é uma iniciativa de inovação cívica.
 **Idealizador:** Domingos Cavallini Neto
-*"Transformando seu olhar em poder."*
+*"Transformando VISÃO em poder."*
