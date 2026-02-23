@@ -1,0 +1,48 @@
+index.html
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zelador Cívico - Auditoria Territorial</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <header>
+        <h1>ZELADOR CÍVICO</h1>
+        <p>Transformando VISÃO em poder</p>
+    </header>
+
+    <main>
+        <section id="busca">
+            <input type="text" id="cep" placeholder="Digite seu CEP ou bairro...">
+            <button onclick="buscarDados()">Analisar Território</button>
+        </section>
+
+        <section id="map-container">
+            <div id="map"></div>
+        </section>
+
+        <section id="dashboard">
+            <div class="card">
+                <h3>Arrecadação vs. Investimento</h3>
+                <p id="arrecadacao">R$ 0,00</p>
+                <small>Margem de Transformação Local</small>
+            </div>
+            <div class="card">
+                <h3>Alertas de Licitação</h3>
+                <p id="alertas">Nenhum alerta crítico</p>
+            </div>
+        </section>
+
+        <section id="acoes">
+            <button class="btn-acao" onclick="acionarOrgao('TCM')">Acionar TCM</button>
+            <button class="btn-acao" onclick="acionarOrgao('MP')">Acionar MP</button>
+        </section>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
