@@ -1,48 +1,53 @@
-index.html
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zelador Cívico - Auditoria Territorial</title>
+    <title>Zelador Cívico</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
     <header>
         <h1>ZELADOR CÍVICO</h1>
-        <p>Transformando VISÃO em poder</p>
+        <p>Auditoria Social e Transparência Territorial</p>
     </header>
 
     <main>
-        <section id="busca">
-            <input type="text" id="cep" placeholder="Digite seu CEP ou bairro...">
-            <button onclick="buscarDados()">Analisar Território</button>
-        </section>
-
-        <section id="map-container">
-            <div id="map"></div>
-        </section>
-
-        <section id="dashboard">
-            <div class="card">
-                <h3>Arrecadação vs. Investimento</h3>
-                <p id="arrecadacao">R$ 0,00</p>
-                <small>Margem de Transformação Local</small>
+        <div class="card">
+            <h3>🔍 Consultar Território</h3>
+            <div id="busca">
+                <input type="text" id="cep" placeholder="Digite o CEP (ex: 01001000)">
+                <button onclick="buscarDados()">Analisar</button>
             </div>
-            <div class="card">
-                <h3>Alertas de Licitação</h3>
-                <p id="alertas">Nenhum alerta crítico</p>
-            </div>
-        </section>
+        </div>
 
-        <section id="acoes">
-            <button class="btn-acao" onclick="acionarOrgao('TCM')">Acionar TCM</button>
-            <button class="btn-acao" onclick="acionarOrgao('MP')">Acionar MP</button>
-        </section>
+        <div id="map"></div>
+
+        <div class="card">
+            <h3>📊 Arrecadação vs. Investimento</h3>
+            <div id="arrecadacao">Aguardando consulta...</div>
+        </div>
+
+        <div class="card">
+            <h3>🚨 Radar de Licitações</h3>
+            <div id="alertas">Consulte um CEP para ver os alertas da região.</div>
+        </div>
+
+        <div class="card">
+            <h3>📢 Ação Cívica</h3>
+            <button onclick="acionarOrgao('TCM/MP')" style="background: #dc3545; margin-bottom: 10px;">🚨 Denúncia Rápida (TCM/MP)</button>
+            <button onclick="gerarRelatorio()" style="background: #004a80;">📄 Gerar Relatório para WhatsApp</button>
+        </div>
     </main>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="script.js"></script>
+    <script>
+        function gerarRelatorio() {
+            const cep = document.getElementById('cep').value || "Não informado";
+            alert("Gerando PDF do Relatório Territorial para o CEP " + cep + "...\nPronto para compartilhar com a Associação de Bairro.");
+        }
+    </script>
 </body>
 </html>
