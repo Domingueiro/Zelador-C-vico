@@ -9,31 +9,40 @@
 </head>
 <body>
     <header style="text-align: center; background: #004a80; color: white; padding: 20px;">
-        <h1 style="margin: 0; font-size: 1.8rem;">ZELADOR CÍVICO</h1>
-        <div style="font-weight: bold; font-size: 1.1rem; color: #FFD700; margin: 10px 0; text-transform: uppercase; letter-spacing: 1px;">
-            Transformando VISÃO em PODER
-        </div>
-        <p style="margin: 0; font-size: 0.9rem; opacity: 0.9;">Auditoria Social e Transparência Territorial</p>
+        <h1 style="margin: 0;">ZELADOR CÍVICO</h1>
+        <div style="font-weight: bold; color: #FFD700; margin: 10px 0;">Transformando VISÃO em PODER</div>
+        <p style="margin: 0; font-size: 0.9rem;">Auditoria Social e Transparência Territorial</p>
     </header>
 
-    <main>
-        <div class="card">
-            <h3>🔍 Consultar Território</h3>
-            <div id="busca" style="display: flex; gap: 10px;">
-                <input type="text" id="cep" placeholder="Digite o CEP (ex: 08410000)" style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
-                <button onclick="buscarDados()" style="width: auto; background: #28a745; padding: 10px 20px;">Analisar</button>
+    <main style="padding: 15px; max-width: 600px; margin: auto;">
+        <div class="card" style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <h3>🔍 Consultar CEP</h3>
+            <input type="text" id="cep" placeholder="Ex: 08410000" style="width: 70%; padding: 10px;">
+            <button onclick="buscarDados()" style="background: #28a745; color: white; border: none; padding: 10px;">Analisar</button>
+        </div>
+
+        <div id="map" style="height: 200px; border-radius: 8px; margin-bottom: 15px;"></div>
+
+        <div class="card" style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <h3>📊 Dados Territoriais</h3>
+            <div id="arrecadacao">Aguardando consulta...</div>
+            <div id="alertas" style="margin-top: 10px;"></div>
+            <div id="btn-comparar-container" style="display:none; margin-top: 15px;">
+                <button onclick="mostrarComparativo()" style="background: #6f42c1; color: white; border: none; padding: 10px; width: 100%;">⚖️ Comparar Disparidade</button>
             </div>
         </div>
 
-        <div id="map"></div>
-
-        <div class="card">
-            <h3>📊 Arrecadação vs. Investimento</h3>
-            <div id="arrecadacao">Aguardando consulta...</div>
+        <div id="modal-comparativo" class="card" style="display:none; border: 2px solid #6f42c1; background: #fdfbff; padding: 15px; border-radius: 8px;">
+            <h3>⚖️ Disparidade Territorial</h3>
+            <div id="tabela-comparativa"></div>
+            <button onclick="document.getElementById('modal-comparativo').style.display='none'" style="margin-top: 10px;">Fechar</button>
         </div>
+    </main>
 
-        <div class="card">
-            <h3>🚨 Radar de Licitações</h3>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
             <div id="alertas">Consulte um CEP para ver os alertas.</div>
             
             <div id="btn-comparar-container" style="display:none; margin-top: 15px;">
