@@ -4,66 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zelador Cívico</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        body { font-family: sans-serif; margin: 0; background: #f4f4f4; }
+        .card { background: white; padding: 15px; margin: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        button { width: 100%; padding: 12px; border: none; border-radius: 5px; color: white; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        #map { height: 200px; margin: 10px; border-radius: 8px; border: 1px solid #ccc; }
+        .lema { font-weight: bold; color: #FFD700; margin: 5px 0; text-transform: uppercase; }
+    </style>
 </head>
 <body>
+
     <header style="text-align: center; background: #004a80; color: white; padding: 20px;">
         <h1 style="margin: 0;">ZELADOR CÍVICO</h1>
-        <div style="font-weight: bold; color: #FFD700; margin: 10px 0;">Transformando VISÃO em PODER</div>
-        <p style="margin: 0; font-size: 0.9rem;">Auditoria Social e Transparência Territorial</p>
+        <div class="lema">Transformando VISÃO em PODER</div>
+        <p style="margin: 0; font-size: 0.8rem;">Auditoria Social e Transparência Territorial</p>
     </header>
 
-    <main style="padding: 15px; max-width: 600px; margin: auto;">
-        <div class="card" style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-            <h3>🔍 Consultar CEP</h3>
-            <input type="text" id="cep" placeholder="Ex: 08410000" style="width: 70%; padding: 10px;">
-            <button onclick="buscarDados()" style="background: #28a745; color: white; border: none; padding: 10px;">Analisar</button>
-        </div>
+    <div class="card">
+        <h3>🔍 Consultar CEP</h3>
+        <input type="text" id="cep" placeholder="Ex: 08410000" style="width: 60%; padding: 10px;">
+        <button onclick="buscarDados()" style="background: #28a745; width: 30%; display: inline-block;">Analisar</button>
+    </div>
 
-        <div id="map" style="height: 200px; border-radius: 8px; margin-bottom: 15px;"></div>
+    <div id="map"></div>
 
-        <div class="card" style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-            <h3>📊 Dados Territoriais</h3>
-            <div id="arrecadacao">Aguardando consulta...</div>
-            <div id="alertas" style="margin-top: 10px;"></div>
-            <div id="btn-comparar-container" style="display:none; margin-top: 15px;">
-                <button onclick="mostrarComparativo()" style="background: #6f42c1; color: white; border: none; padding: 10px; width: 100%;">⚖️ Comparar Disparidade</button>
-            </div>
-        </div>
+    <div class="card">
+        <h3>📊 Tomografia Territorial</h3>
+        <div id="arrecadacao">Digite o CEP para iniciar.</div>
+        <hr>
+        <div id="alertas"></div>
+        <button id="btn-comp" onclick="mostrarComparativo()" style="display:none; background: #6f42c1;">⚖️ Comparar Disparidade</button>
+    </div>
 
-        <div id="modal-comparativo" class="card" style="display:none; border: 2px solid #6f42c1; background: #fdfbff; padding: 15px; border-radius: 8px;">
-            <h3>⚖️ Disparidade Territorial</h3>
-            <div id="tabela-comparativa"></div>
-            <button onclick="document.getElementById('modal-comparativo').style.display='none'" style="margin-top: 10px;">Fechar</button>
-        </div>
-    </main>
+    <div id="modal-comp" class="card" style="display:none; border: 2px solid #6f42c1;">
+        <h3>⚖️ Resultado da Comparação</h3>
+        <div id="tabela-comp"></div>
+        <button onclick="document.getElementById('modal-comp').style.display='none'" style="background:#666">Fechar</button>
+    </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
-            <div id="alertas">Consulte um CEP para ver os alertas.</div>
-            
-            <div id="btn-comparar-container" style="display:none; margin-top: 15px;">
-                <button onclick="mostrarComparativo()" style="background: #6f42c1;">⚖️ Comparar Disparidade</button>
-            </div>
-        </div>
+    <script>
+        // Inicializa Mapa
+        var map = L.map('map').setView([-23.5505, -46.6333], 12); 
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-        <div id="modal-comparativo" class="card" style="display:none; border: 2px solid #6f42c1; background: #fdfbff;">
-            <h3>⚖️ Disparidade Territorial</h3>
-            <div id="tabela-comparativa"></div>
-            <button onclick="document.getElementById('modal-comparativo').style.display='none'" style="background: #666; margin-top:15px; padding:8px; font-size: 0.8rem;">Fechar Comparação</button>
-        </div>
+        var dadoAtual = null;
 
-        <div class="card">
-            <h3>📢 Ação Cívica</h3>
-            <button onclick="acionarOrgao('TCM/MP')" style="background: #dc3545; margin-bottom: 10px;">🚨 Denúncia Rápida (TCM/MP)</button>
-            <button onclick="gerarRelatorio()" style="background: #004a80;">📄 Gerar Relatório para WhatsApp</button>
-        </div>
-    </main>
+        function buscarDados() {
+            var cep = document.getElementById('cep').value.replace(/\D/g, '');
+            if(cep.length < 8) { alert("CEP incompleto!"); return; }
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="script.js"></script>
+            var info = { bairro: "Geral", valor: 1200000, perc: 0.12, msg: "Analizando..." };
+
+            if(cep.startsWith('01') || cep.startsWith('045')) {
+                info = { bairro: "Centro/Itaim Bibi", valor: 4850000, perc: 0.08, msg: "<b style='color:#856404'>🟡 SOBREPREÇO:</b> Licitação de recapeamento suspeita.<br><b style='color:red'>🔴 FUGA:</b> 92% do recurso sai do bairro." };
+            } else if(cep.startsWith('08') || cep.startsWith('058')) {
+                info = { bairro: "Periferia/Extremo", valor: 620000, perc: 0.05, msg: "<b style='color:red'>🔴 CRÍTICO:</b> Manutenção de semáforos suspensa.<br><b style='color:red'>🔴 DÉFICIT:</b> 60% abaixo da meta local." };
+            }
+
+            dadoAtual = info;
+            var inv = info.valor * info.perc;
+
+            document.getElementById('arrecadacao').innerHTML = "<b>" + info.bairro + "</b><br>Arrecadado: R$ " + info.valor.toLocaleString('pt-BR') + "<br><b>Retorno: R$ " + inv.toLocaleString('pt-BR') + " (" + (info.perc*100) + "%)</b>";
+            document.getElementById('alertas').innerHTML = info.msg;
+            document.getElementById('btn-comp').style.display = 'block';
+            alert("Tomografia concluída!");
+        }
+
+        function mostrarComparativo() {
+            var vezes = ((4850000 * 0.08) / (dadoAtual.valor * dadoAtual.perc)).toFixed(1);
+            document.getElementById('tabela-comp').innerHTML = "O Centro recebe <b>" + vezes + "x mais</b> investimento que o seu CEP.";
+            document.getElementById('modal-comp').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
