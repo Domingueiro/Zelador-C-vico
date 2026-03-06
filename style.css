@@ -1,9 +1,73 @@
-body { font-family: sans-serif; margin: 0; background: #f4f4f4; }
-header { background: #004a80; color: white; text-align: center; padding: 1rem; }
-main { padding: 20px; max-width: 800px; margin: auto; }
-#map { height: 300px; background: #ddd; border-radius: 8px; margin: 20px 0; }
-#busca { display: flex; gap: 10px; }
-input { flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ccc; }
-button { padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; }
-.card { background: white; padding: 15px; border-radius: 8px; margin-bottom: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-.btn-acao { width: 100%; margin-top: 10px; background: #dc3545; }
+/* Estilos Gerais */
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    margin: 0; 
+    background: #f0f2f5; 
+    color: #333;
+}
+
+header { 
+    background: #004a80; 
+    color: white; 
+    text-align: center; 
+    padding: 1.5rem 1rem; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+main { 
+    padding: 15px; 
+    max-width: 600px; 
+    margin: auto; 
+}
+
+/* Cartões de Informação */
+.card { 
+    background: white; 
+    padding: 20px; 
+    border-radius: 12px; 
+    margin-bottom: 20px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+}
+
+h3 { margin-top: 0; color: #004a80; font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+
+/* Mapa */
+#map { 
+    height: 250px; 
+    width: 100%;
+    border-radius: 12px; 
+    margin-bottom: 20px; 
+    z-index: 1;
+}
+
+/* Busca */
+#busca { display: flex; gap: 10px; margin-top: 10px; }
+input { 
+    flex: 1; 
+    padding: 12px; 
+    border-radius: 8px; 
+    border: 1px solid #ccc; 
+    font-size: 16px; /* Evita zoom automático no iPhone */
+}
+
+/* Botões */
+button { 
+    width: 100%;
+    padding: 14px; 
+    color: white; 
+    border: none; 
+    border-radius: 8px; 
+    font-weight: bold; 
+    font-size: 1rem;
+    cursor: pointer; 
+    transition: opacity 0.2s;
+    margin-top: 5px;
+}
+
+button:active { opacity: 0.8; }
+
+#busca button { width: auto; background: #28a745; margin-top: 0; }
+
+/* Cores do Radar e Arrecadação */
+#arrecadacao { line-height: 1.6; }
+#alertas { font-size: 0.9rem; line-height: 1.4; }
