@@ -1,17 +1,20 @@
+// 1. Inicialização do Mapa
 var map = L.map('map').setView([-23.5505, -46.6333], 12); 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
+// 2. Variável Global para Comparação
 var dadoAtual = null;
 
+// 3. Função Principal: Buscar e Analisar Dados
 function buscarDados() {
     var campoCep = document.getElementById('cep').value.replace(/\D/g, '');
     
     if(campoCep.length < 8) {
-        alert("Digite o CEP completo.");
+        alert("Por favor, digite o CEP completo (8 dígitos).");
         return;
     }
 
-    // Estrutura de Dados com os Alertas de Licitação
+    // Configuração Inicial (Cenário Padrão)
     var info = { 
         bairro: "Região Geral", 
         valor: 1200000, 
@@ -19,7 +22,7 @@ function buscarDados() {
         msg: "<p style='color: #666;'>Analizando contratos locais de zeladoria...</p>" 
     };
 
-    // CENÁRIO A: Centro/Itaim (Alta Arrecadação)
+    // CENÁRIO A: Centro/Itaim (Alta Arrecadação / Baixo Retorno)
     if(campoCep.startsWith('01') || campoCep.startsWith('045')) {
         info = { 
             bairro: "Centro/Itaim Bibi", 
@@ -36,7 +39,7 @@ function buscarDados() {
                 </div>` 
         };
     } 
-    // CENÁRIO B: Periferia/Extremo (Déficit de Investimento)
+    // CENÁRIO B: Periferia/Extremo (Baixa Arrecadação / Alertas Críticos)
     else if(campoCep.startsWith('08') || campoCep.startsWith('058')) {
         info = { 
             bairro: "Periferia/Extremo", 
@@ -75,7 +78,37 @@ function buscarDados() {
     alert("Tomografia Territorial concluída!");
 }
 
+// 4. Função de Comparação de Disparidade
+function mostrarComparativo() {
+    if(!dadoAtual) return;
+    
+    var centroInv = 4850000 * 0.08;
+    var localInv = dadoAtual.valor * dadoAtual.perc;
+    var vezes = (centroInv / localInv).toFixed(1);
+
+    document.getElementById('tabela-comparativa').innerHTML = `
+        <div style="padding: 10px; background: #eee; border-radius: 5px; margin-bottom: 10px;">
+            <p>O Centro recebe <b>${vezes}x mais</b> investimento direto que o seu território.</p>
+        </div>
+        <table style="width:100%; font-size: 0.85rem; border-collapse: collapse;">
+            <tr style="border-bottom: 1px solid #ccc;">
+                <th style="text-align:left;">Item</th>
+                <th>Seu CEP</th>
+                <th>Centro</th>
+            </tr>
+            <tr>
+                <td>Investimento</td>
+                <td>R$ ${localInv.toLocaleString('pt-BR')}</td>
+                <td>R$ ${centroInv.toLocaleString('pt-BR')}</td>
+            </tr>
+        </table>
+    `;
+    document.getElementById('modal-comparativo').style.display = 'block';
 }
+
+// 5. Funções de Ação
+function acionarOrgao(orgao) { alert("Protocolo enviado ao " + orgao); }
+function gerarRelatorio() { alert("Relatório formatado para WhatsApp!"); }
 
 function mostrarComparativo() {
     if(!dadoAtual) return;
