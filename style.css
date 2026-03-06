@@ -12,7 +12,21 @@ header {
     text-align: center; 
     padding: 1.5rem 1rem; 
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}header p { 
+    margin: 5px 0 0 0; 
+    font-size: 0.9rem; 
+    opacity: 0.9; 
 }
+
+.lema {
+    font-weight: bold;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    color: #ffd700; /* Um tom dourado para destacar o "Poder" */
+    margin-top: 5px;
+    text-transform: uppercase;
+}
+
 
 main { 
     padding: 15px; 
