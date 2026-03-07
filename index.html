@@ -1,14 +1,11 @@
-<!DOCTYPE html>
+     <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Zelador Cívico — Auditoria Territorial</title>
 
-  <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
-  <!-- Fontes -->
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet" />
 
   <style>
@@ -34,7 +31,6 @@
       min-height: 100vh;
     }
 
-    /* ── HEADER ── */
     header {
       background: var(--azul);
       color: var(--branco);
@@ -48,11 +44,8 @@
       position: absolute;
       inset: 0;
       background: repeating-linear-gradient(
-        -45deg,
-        transparent,
-        transparent 18px,
-        rgba(255,255,255,0.03) 18px,
-        rgba(255,255,255,0.03) 36px
+        -45deg, transparent, transparent 18px,
+        rgba(255,255,255,0.03) 18px, rgba(255,255,255,0.03) 36px
       );
     }
     .header-inner { position: relative; z-index: 1; }
@@ -76,10 +69,8 @@
       font-size: 0.72rem;
       color: rgba(255,215,0,0.6);
       margin-top: 3px;
-      letter-spacing: 0.05em;
     }
 
-    /* ── CARDS ── */
     .card {
       background: var(--branco);
       border-radius: 10px;
@@ -100,11 +91,7 @@
       gap: 8px;
     }
 
-    /* ── BUSCA CEP ── */
-    .busca-row {
-      display: flex;
-      gap: 8px;
-    }
+    .busca-row { display: flex; gap: 8px; }
     .busca-row input {
       flex: 1;
       padding: 12px 14px;
@@ -118,7 +105,7 @@
       transition: border-color 0.2s;
     }
     .busca-row input:focus { border-color: var(--azul-vivo); }
-    .busca-row input::placeholder { color: #aaa; letter-spacing: 0.05em; }
+    .busca-row input::placeholder { color: #aaa; }
     .btn-analisar {
       padding: 12px 20px;
       background: var(--verde);
@@ -137,17 +124,14 @@
     .btn-analisar:active { transform: scale(0.97); }
     .btn-analisar:disabled { background: #aaa; cursor: not-allowed; }
 
-    /* ── MAPA ── */
     #map {
       height: 200px;
       margin: 0 12px 12px;
       border-radius: 10px;
       border: 2px solid var(--cinza2);
       z-index: 1;
-      overflow: hidden;
     }
 
-    /* ── STATUS ── */
     #status-wrap {
       display: none;
       margin: 0 12px 12px;
@@ -156,7 +140,6 @@
       padding: 12px 16px;
       color: white;
       font-size: 0.85rem;
-      display: none;
       align-items: center;
       gap: 10px;
     }
@@ -170,7 +153,6 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── ERRO ── */
     #erro-wrap {
       display: none;
       margin: 0 12px 12px;
@@ -183,7 +165,6 @@
       font-weight: 500;
     }
 
-    /* ── PAINEL RESULTADOS ── */
     #resultados { display: none; }
 
     .bairro-header {
@@ -207,13 +188,8 @@
       color: rgba(255,255,255,0.65);
       margin-top: 2px;
     }
-    .bairro-sub {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.55);
-      margin-top: 4px;
-    }
+    .bairro-sub { font-size: 0.8rem; color: rgba(255,255,255,0.55); margin-top: 4px; }
 
-    /* ── MÉTRICAS ── */
     .metricas-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -227,9 +203,9 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.07);
       border-top: 3px solid var(--azul);
     }
-    .metrica.alerta { border-top-color: var(--vermelho); }
+    .metrica.alerta   { border-top-color: var(--vermelho); }
     .metrica.positivo { border-top-color: var(--verde); }
-    .metrica.aviso { border-top-color: var(--ouro-suave); }
+    .metrica.aviso    { border-top-color: var(--ouro-suave); }
     .metrica-label {
       font-size: 0.68rem;
       text-transform: uppercase;
@@ -245,13 +221,8 @@
       color: var(--texto);
       line-height: 1;
     }
-    .metrica-sub {
-      font-size: 0.72rem;
-      color: #aaa;
-      margin-top: 3px;
-    }
+    .metrica-sub { font-size: 0.72rem; color: #aaa; margin-top: 3px; }
 
-    /* ── IA ANÁLISE ── */
     .ia-box {
       background: #f7f9ff;
       border: 1.5px solid #c8d8f0;
@@ -259,12 +230,7 @@
       padding: 14px;
       margin-bottom: 12px;
     }
-    .ia-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
+    .ia-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
     .ia-badge {
       background: var(--azul);
       color: var(--ouro);
@@ -275,20 +241,11 @@
       padding: 3px 8px;
       border-radius: 4px;
     }
-    .ia-titulo {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--azul);
-    }
-    .ia-texto {
-      font-size: 0.88rem;
-      color: #333;
-      line-height: 1.7;
-    }
+    .ia-titulo { font-size: 0.82rem; font-weight: 600; color: var(--azul); }
+    .ia-texto { font-size: 0.88rem; color: #333; line-height: 1.7; }
     .ia-texto p { margin-bottom: 8px; }
     .ia-texto p:last-child { margin-bottom: 0; }
 
-    /* ── ALERTAS ── */
     .alerta-item {
       border-left: 4px solid var(--vermelho);
       background: #fff5f5;
@@ -297,13 +254,9 @@
       margin-bottom: 10px;
       font-size: 0.85rem;
     }
-    .alerta-item.aviso {
-      border-left-color: var(--ouro-suave);
-      background: #fffdf0;
-    }
+    .alerta-item.aviso { border-left-color: var(--ouro-suave); background: #fffdf0; }
     .alerta-item b { display: block; margin-bottom: 2px; font-size: 0.8rem; }
 
-    /* ── OBRAS ── */
     .obra-item {
       background: var(--cinza);
       border-radius: 8px;
@@ -336,12 +289,11 @@
       display: inline-block;
       margin-top: 4px;
     }
-    .pill-verde  { background: #e8f5e9; color: var(--verde); }
-    .pill-ouro   { background: #fff8dc; color: var(--ouro-suave); }
-    .pill-azul   { background: #e3f0ff; color: var(--azul-vivo); }
-    .pill-cinza  { background: #eee; color: #666; }
+    .pill-verde { background: #e8f5e9; color: var(--verde); }
+    .pill-ouro  { background: #fff8dc; color: var(--ouro-suave); }
+    .pill-azul  { background: #e3f0ff; color: var(--azul-vivo); }
+    .pill-cinza { background: #eee; color: #666; }
 
-    /* ── COMPARATIVO ── */
     .comp-barra-wrap { margin: 10px 0; }
     .comp-label {
       display: flex;
@@ -356,14 +308,10 @@
       background: var(--cinza2);
       overflow: hidden;
     }
-    .comp-barra-fill {
-      height: 100%;
-      border-radius: 6px;
-      transition: width 1s ease;
-    }
-    .fill-centro   { background: var(--azul-vivo); }
-    .fill-periferia{ background: var(--vermelho); }
-    .fill-local    { background: var(--verde); }
+    .comp-barra-fill { height: 100%; border-radius: 6px; transition: width 1s ease; }
+    .fill-centro    { background: var(--azul-vivo); }
+    .fill-local     { background: var(--verde); }
+    .fill-media     { background: var(--ouro-suave); }
     .comp-conclusao {
       font-size: 0.82rem;
       background: #fff8dc;
@@ -375,12 +323,7 @@
       line-height: 1.6;
     }
 
-    /* ── AÇÕES CÍVICAS ── */
-    .acoes-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
+    .acoes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .btn-acao {
       display: flex;
       flex-direction: column;
@@ -402,14 +345,13 @@
       text-align: center;
     }
     .btn-acao:active { transform: scale(0.96); }
-    .btn-acao:hover { filter: brightness(1.1); }
+    .btn-acao:hover  { filter: brightness(1.1); }
     .btn-acao .icone { font-size: 1.4rem; }
     .btn-tcm   { background: var(--vermelho); }
     .btn-mp    { background: #6a1f8a; }
     .btn-zap   { background: #128C7E; }
     .btn-relat { background: var(--azul); }
 
-    /* ── DISCLAIMER ── */
     .disclaimer {
       font-size: 0.68rem;
       color: #aaa;
@@ -419,7 +361,6 @@
     }
     .disclaimer a { color: #888; }
 
-    /* ── FOOTER ── */
     footer {
       background: var(--azul);
       color: rgba(255,255,255,0.4);
@@ -429,17 +370,10 @@
       letter-spacing: 0.05em;
       margin-top: 8px;
     }
-
-    @media (max-width: 400px) {
-      header h1 { font-size: 2rem; }
-      .metricas-grid { grid-template-columns: 1fr 1fr; }
-      .acoes-grid { grid-template-columns: 1fr 1fr; }
-    }
   </style>
 </head>
 <body>
 
-<!-- ══ HEADER ══ -->
 <header>
   <div class="header-inner">
     <h1>⚖ ZELADOR CÍVICO</h1>
@@ -448,41 +382,32 @@
   </div>
 </header>
 
-<!-- ══ BUSCA CEP ══ -->
 <div class="card" style="margin-top:14px">
   <div class="card-title">🔍 Consultar Território</div>
   <div class="busca-row">
     <input type="text" id="cep-input" placeholder="00000-000" maxlength="9" autocomplete="off" />
     <button class="btn-analisar" id="btn-analisar" onclick="iniciarAnalise()">Analisar</button>
   </div>
-  <p style="font-size:0.75rem; color:#999; margin-top:8px;">
-    Ex: 02550-040 · 08410-000 · 01310-100
-  </p>
+  <p style="font-size:0.75rem; color:#999; margin-top:8px;">Ex: 02550-040 · 08410-000 · 01310-100</p>
 </div>
 
-<!-- ══ MAPA ══ -->
 <div id="map"></div>
 
-<!-- ══ STATUS ══ -->
 <div id="status-wrap">
   <div class="spin"></div>
   <span id="status-texto">Consultando dados...</span>
 </div>
 
-<!-- ══ ERRO ══ -->
 <div id="erro-wrap"></div>
 
-<!-- ══ RESULTADOS ══ -->
 <div id="resultados">
 
-  <!-- Cabeçalho do Bairro -->
   <div class="bairro-header">
     <div class="bairro-nome" id="r-bairro">—</div>
     <div class="bairro-cep" id="r-cep">CEP 00000-000</div>
     <div class="bairro-sub" id="r-sub">Subprefeitura —</div>
   </div>
 
-  <!-- Métricas -->
   <div class="metricas-grid">
     <div class="metrica" id="card-obras">
       <div class="metrica-label">📋 Obras</div>
@@ -506,7 +431,6 @@
     </div>
   </div>
 
-  <!-- Análise IA -->
   <div class="card">
     <div class="card-title">🤖 Análise Territorial — IA</div>
     <div class="ia-box">
@@ -518,32 +442,28 @@
     </div>
   </div>
 
-  <!-- Alertas -->
   <div class="card" id="card-alertas" style="display:none">
     <div class="card-title">🚨 Alertas de Irregularidade</div>
     <div id="r-alertas"></div>
   </div>
 
-  <!-- Obras Detalhadas -->
   <div class="card">
     <div class="card-title">🏗 Obras e Projetos</div>
     <div id="r-obras-lista"></div>
   </div>
 
-  <!-- Comparativo -->
   <div class="card">
     <div class="card-title">⚖ Comparativo Territorial</div>
     <div id="r-comparativo"></div>
   </div>
 
-  <!-- Ações Cívicas -->
   <div class="card">
     <div class="card-title">📣 Ação Cívica</div>
     <div class="acoes-grid">
-      <a id="btn-tcm" class="btn-acao btn-tcm" href="https://www.tcm.sp.gov.br/ouvidoria" target="_blank">
+      <a class="btn-acao btn-tcm" href="https://www.tcm.sp.gov.br/ouvidoria" target="_blank">
         <span class="icone">🏛</span>Denunciar TCM
       </a>
-      <a id="btn-mp" class="btn-acao btn-mp" href="https://www.mpsp.mp.br/portal/page/portal/cao_cidadania/Atendimento_ao_publico" target="_blank">
+      <a class="btn-acao btn-mp" href="https://www.mpsp.mp.br/portal/page/portal/cao_cidadania/Atendimento_ao_publico" target="_blank">
         <span class="icone">⚖</span>Acionar MP-SP
       </a>
       <button class="btn-acao btn-zap" onclick="enviarWhatsApp()">
@@ -555,303 +475,236 @@
     </div>
   </div>
 
-  <!-- Disclaimer -->
   <div class="disclaimer">
     Dados obtidos via <a href="https://viacep.com.br" target="_blank">ViaCEP</a>,
     <a href="https://obrasabertas.prefeitura.sp.gov.br" target="_blank">Obras Abertas PMSP</a> e
     <a href="https://dados.prefeitura.sp.gov.br" target="_blank">Dados Abertos SP</a>.<br>
-    Síntese gerada por IA com base em fontes públicas — verifique portais oficiais para informações atualizadas.<br>
+    Síntese gerada por IA — verifique portais oficiais para informações atualizadas.<br>
     Zelador Cívico não representa a Prefeitura de São Paulo.
   </div>
 
-</div><!-- /resultados -->
+</div>
 
 <footer>ZELADOR CÍVICO · Auditoria Social e Transparência Territorial · São Paulo</footer>
 
-<!-- ══ LEAFLET JS ══ -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <script>
-// ─── MAPA ─────────────────────────────────────────────────────────────────
-var mapa = L.map('map').setView([-23.5505, -46.6333], 11);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '© OpenStreetMap'
-}).addTo(mapa);
-var marcador = null;
 
-function moverMapa(lat, lon, label) {
-  mapa.setView([lat, lon], 15);
-  if (marcador) mapa.removeLayer(marcador);
-  marcador = L.marker([lat, lon])
-    .addTo(mapa)
-    .bindPopup('<b>' + label + '</b>')
-    .openPopup();
-}
+  // ══════════════════════════════════════════════════════════════════
+  // ⚙️  CONFIGURAÇÃO — cole aqui a URL do seu servidor no Replit
+  //     Exemplo: 'https://zelador-civico-api.SEU_USUARIO.repl.co'
+  // ══════════════════════════════════════════════════════════════════
+  var API_URL = 'https://SEU-REPLIT-URL.repl.co';
+  // ══════════════════════════════════════════════════════════════════
 
-// ─── HELPERS ──────────────────────────────────────────────────────────────
-var dadosCache = null;
+  // ── MAPA ──────────────────────────────────────────────────────────
+  var mapa = L.map('map').setView([-23.5505, -46.6333], 11);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(mapa);
+  var marcador = null;
 
-function setStatus(msg) {
-  var w = document.getElementById('status-wrap');
-  w.style.display = 'flex';
-  document.getElementById('status-texto').textContent = msg;
-}
-function hideStatus() {
-  document.getElementById('status-wrap').style.display = 'none';
-}
-function setErro(msg) {
-  var e = document.getElementById('erro-wrap');
-  e.style.display = 'block';
-  e.textContent = '⚠ ' + msg;
-}
-function clearErro() {
-  document.getElementById('erro-wrap').style.display = 'none';
-}
-
-// Formata CEP enquanto digita
-document.getElementById('cep-input').addEventListener('input', function() {
-  var v = this.value.replace(/\D/g,'').slice(0,8);
-  if (v.length > 5) v = v.slice(0,5) + '-' + v.slice(5);
-  this.value = v;
-});
-document.getElementById('cep-input').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') iniciarAnalise();
-});
-
-// ─── MAIN ─────────────────────────────────────────────────────────────────
-async function iniciarAnalise() {
-  var raw = document.getElementById('cep-input').value.replace(/\D/g,'');
-  if (raw.length !== 8) { setErro('Informe um CEP válido com 8 dígitos.'); return; }
-
-  clearErro();
-  document.getElementById('resultados').style.display = 'none';
-  document.getElementById('btn-analisar').disabled = true;
-
-  // PASSO 1: ViaCEP
-  setStatus('📍 Localizando endereço via ViaCEP...');
-  var end;
-  try {
-    var r = await fetch('https://viacep.com.br/ws/' + raw + '/json/');
-    var d = await r.json();
-    if (d.erro) throw new Error('CEP não encontrado.');
-    end = d;
-  } catch(e) {
-    hideStatus();
-    document.getElementById('btn-analisar').disabled = false;
-    setErro('CEP inválido ou não encontrado. Tente novamente.');
-    return;
+  function moverMapa(lat, lon, label) {
+    mapa.setView([lat, lon], 15);
+    if (marcador) mapa.removeLayer(marcador);
+    marcador = L.marker([lat, lon]).addTo(mapa)
+      .bindPopup('<b>' + label + '</b>').openPopup();
   }
 
-  // PASSO 2: Geocodificação via Nominatim
-  setStatus('🗺 Posicionando no mapa...');
-  try {
-    var query = (end.logradouro || '') + ', ' + (end.bairro || '') + ', ' + end.localidade + ', SP, Brasil';
-    var geo = await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(query));
-    var gd = await geo.json();
-    if (gd && gd[0]) {
-      moverMapa(parseFloat(gd[0].lat), parseFloat(gd[0].lon),
+  // ── HELPERS ───────────────────────────────────────────────────────
+  var dadosCache = null;
+
+  function setStatus(msg) {
+    var w = document.getElementById('status-wrap');
+    w.style.display = 'flex';
+    document.getElementById('status-texto').textContent = msg;
+  }
+  function hideStatus() { document.getElementById('status-wrap').style.display = 'none'; }
+  function setErro(msg) {
+    var e = document.getElementById('erro-wrap');
+    e.style.display = 'block';
+    e.textContent = '⚠ ' + msg;
+  }
+  function clearErro() { document.getElementById('erro-wrap').style.display = 'none'; }
+
+  document.getElementById('cep-input').addEventListener('input', function() {
+    var v = this.value.replace(/\D/g,'').slice(0,8);
+    if (v.length > 5) v = v.slice(0,5) + '-' + v.slice(5);
+    this.value = v;
+  });
+  document.getElementById('cep-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') iniciarAnalise();
+  });
+
+  // ── FLUXO PRINCIPAL ───────────────────────────────────────────────
+  async function iniciarAnalise() {
+    var raw = document.getElementById('cep-input').value.replace(/\D/g,'');
+    if (raw.length !== 8) { setErro('Informe um CEP válido com 8 dígitos.'); return; }
+
+    clearErro();
+    document.getElementById('resultados').style.display = 'none';
+    document.getElementById('btn-analisar').disabled = true;
+
+    // PASSO 1: ViaCEP
+    setStatus('📍 Localizando endereço...');
+    var end;
+    try {
+      var r = await fetch('https://viacep.com.br/ws/' + raw + '/json/');
+      var d = await r.json();
+      if (d.erro) throw new Error('CEP não encontrado.');
+      end = d;
+    } catch(e) {
+      hideStatus();
+      document.getElementById('btn-analisar').disabled = false;
+      setErro('CEP inválido ou não encontrado.');
+      return;
+    }
+
+    // PASSO 2: Mapa via Nominatim
+    setStatus('🗺 Posicionando no mapa...');
+    try {
+      var query = (end.logradouro||'') + ', ' + (end.bairro||'') + ', ' + end.localidade + ', SP, Brasil';
+      var geo = await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(query));
+      var gd = await geo.json();
+      if (gd && gd[0]) moverMapa(parseFloat(gd[0].lat), parseFloat(gd[0].lon),
         (end.bairro || end.localidade) + ' · CEP ' + raw.slice(0,5)+'-'+raw.slice(5));
+    } catch(e) { /* continua */ }
+
+    // PASSO 3: Backend Replit
+    setStatus('🤖 Gerando análise territorial com IA...');
+    try {
+      var resp = await fetch(API_URL + '/analisar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          cep: raw.slice(0,5)+'-'+raw.slice(5),
+          logradouro: end.logradouro,
+          bairro: end.bairro,
+          localidade: end.localidade,
+          uf: end.uf
+        })
+      });
+
+      var res = await resp.json();
+      if (res.erro) throw new Error(res.erro);
+
+      dadosCache = { cep: raw.slice(0,5)+'-'+raw.slice(5), endereco: end, dados: res };
+      renderResultados(raw.slice(0,5)+'-'+raw.slice(5), end, res);
+
+    } catch(e) {
+      hideStatus();
+      document.getElementById('btn-analisar').disabled = false;
+      setErro('Erro ao gerar análise: ' + e.message + '. Verifique se o servidor Replit está no ar.');
     }
-  } catch(e) { /* mapa continua no default */ }
+  }
 
-  // PASSO 3: Análise via IA
-  setStatus('🤖 Consultando dados abertos e gerando análise territorial...');
-  var cepFmt = raw.slice(0,5) + '-' + raw.slice(5);
-  var prompt = `Você é um especialista em transparência pública e dados abertos da Prefeitura de São Paulo.
-
-CEP consultado: ${cepFmt}
-Logradouro: ${end.logradouro || 'N/D'}
-Bairro: ${end.bairro || 'N/D'}
-Localidade: ${end.localidade}
-UF: ${end.uf}
-
-Gere uma análise territorial realista baseada em padrões históricos de investimento da PMSP, dados do Portal Obras Abertas, SIURB, GeoSampa, Plano Plurianual (PPA) e Subprefeituras.
-
-Responda SOMENTE em JSON válido, sem markdown, sem texto extra:
-{
-  "bairro": "Nome do bairro",
-  "subprefeitura": "Nome da Subprefeitura responsável",
-  "total_obras": <número inteiro>,
-  "investimento_total": "R$ X mi",
-  "retorno_percentual": <número de 0 a 100>,
-  "disparidade_label": "X,Xx mais/menos que a média SP",
-  "nivel_alerta": "baixo|medio|alto",
-  "analise": "3 parágrafos curtos sobre perfil territorial, investimentos em andamento e desafios/oportunidades da região. Seja específico ao bairro.",
-  "alertas": [
-    { "tipo": "critico|aviso", "titulo": "Título", "descricao": "Detalhe breve" }
-  ],
-  "obras": [
-    {
-      "nome": "Nome da obra ou projeto",
-      "tipo": "Pavimentação|Saúde|Educação|Mobilidade|Habitação|Saneamento|Urbanismo|Iluminação|Outro",
-      "status": "Em andamento|Prevista|Concluída|Contratada",
-      "valor": "R$ X mi ou N/D",
-      "detalhe": "Logradouro ou escopo resumido"
-    }
-  ],
-  "comparativo": {
-    "seu_cep_perc": <percentual 0-100 relativo ao máximo>,
-    "media_sp_perc": <percentual 0-100>,
-    "melhor_bairro_perc": 100,
-    "melhor_bairro": "Nome do bairro mais investido de SP",
-    "conclusao": "Frase comparativa sobre a disparidade territorial"
-  },
-  "whatsapp_msg": "Mensagem de 3 linhas formatada para WhatsApp denunciando ou informando sobre a situação do bairro"
-}
-
-Liste 5 a 8 obras. Seja realista e específico para o CEP informado.`;
-
-  try {
-    var apiResp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-    var apiData = await apiResp.json();
-    var fullText = (apiData.content || []).map(b => b.type === 'text' ? b.text : '').join('\n');
-
-    // Extrai JSON
-    var jsonStr = fullText;
-    var fence = fullText.match(/```(?:json)?\s*([\s\S]*?)```/);
-    if (fence) jsonStr = fence[1];
-    else { var curly = fullText.match(/\{[\s\S]*\}/); if (curly) jsonStr = curly[0]; }
-
-    var res = JSON.parse(jsonStr.trim());
-    dadosCache = { cep: cepFmt, endereco: end, dados: res };
-    renderResultados(cepFmt, end, res);
-
-  } catch(e) {
+  // ── RENDER ────────────────────────────────────────────────────────
+  function renderResultados(cep, end, d) {
     hideStatus();
     document.getElementById('btn-analisar').disabled = false;
-    setErro('Erro ao gerar análise: ' + e.message);
-  }
-}
 
-// ─── RENDER ───────────────────────────────────────────────────────────────
-function renderResultados(cep, end, d) {
-  hideStatus();
-  document.getElementById('btn-analisar').disabled = false;
+    document.getElementById('r-bairro').textContent = d.bairro || end.bairro || end.localidade;
+    document.getElementById('r-cep').textContent = 'CEP ' + cep + (end.logradouro ? ' · ' + end.logradouro : '');
+    document.getElementById('r-sub').textContent = 'Subprefeitura ' + (d.subprefeitura || '—');
 
-  // Cabeçalho
-  document.getElementById('r-bairro').textContent = d.bairro || end.bairro || end.localidade;
-  document.getElementById('r-cep').textContent = 'CEP ' + cep + ' · ' + (end.logradouro || '');
-  document.getElementById('r-sub').textContent = 'Subprefeitura ' + (d.subprefeitura || '—');
+    document.getElementById('r-obras').textContent = d.total_obras || '—';
+    document.getElementById('r-invest').textContent = d.investimento_total || '—';
 
-  // Métricas
-  document.getElementById('r-obras').textContent = d.total_obras || '—';
-  document.getElementById('r-invest').textContent = d.investimento_total || '—';
+    var perc = d.retorno_percentual || 0;
+    document.getElementById('r-retorno').textContent = perc + '%';
+    document.getElementById('card-retorno').className = 'metrica ' +
+      (perc < 10 ? 'alerta' : perc < 20 ? 'aviso' : 'positivo');
 
-  var perc = d.retorno_percentual || 0;
-  document.getElementById('r-retorno').textContent = perc + '%';
-  document.getElementById('r-retorno-sub').textContent = 'do arrecadado retorna';
-  var cardRetorno = document.getElementById('card-retorno');
-  cardRetorno.className = 'metrica ' + (perc < 10 ? 'alerta' : perc < 20 ? 'aviso' : 'positivo');
+    document.getElementById('r-disparidade').textContent = d.disparidade_label || '—';
+    document.getElementById('card-disparidade').className = 'metrica ' +
+      (d.nivel_alerta === 'alto' ? 'alerta' : d.nivel_alerta === 'medio' ? 'aviso' : 'positivo');
 
-  document.getElementById('r-disparidade').textContent = d.disparidade_label || '—';
-  var cardDisp = document.getElementById('card-disparidade');
-  cardDisp.className = 'metrica ' + (d.nivel_alerta === 'alto' ? 'alerta' : d.nivel_alerta === 'medio' ? 'aviso' : 'positivo');
+    // Análise IA
+    var analise = d.analise || '';
+    document.getElementById('r-analise').innerHTML =
+      analise.split('\n').filter(Boolean).map(p => '<p>' + p + '</p>').join('');
 
-  // Análise IA
-  var analise = d.analise || '';
-  document.getElementById('r-analise').innerHTML = analise.split('\n').filter(Boolean).map(p => '<p>' + p + '</p>').join('');
-
-  // Alertas
-  var alertas = d.alertas || [];
-  if (alertas.length > 0) {
-    document.getElementById('card-alertas').style.display = 'block';
-    document.getElementById('r-alertas').innerHTML = alertas.map(function(a) {
-      return '<div class="alerta-item ' + (a.tipo === 'aviso' ? 'aviso' : '') + '">' +
+    // Alertas
+    var alertas = d.alertas || [];
+    if (alertas.length > 0) {
+      document.getElementById('card-alertas').style.display = 'block';
+      document.getElementById('r-alertas').innerHTML = alertas.map(a =>
+        '<div class="alerta-item ' + (a.tipo === 'aviso' ? 'aviso' : '') + '">' +
         '<b>' + (a.tipo === 'critico' ? '🔴 ' : '🟡 ') + a.titulo + '</b>' +
-        '<span>' + a.descricao + '</span></div>';
+        a.descricao + '</div>'
+      ).join('');
+    }
+
+    // Obras
+    document.getElementById('r-obras-lista').innerHTML = (d.obras || []).map(o => {
+      var s = (o.status||'').toLowerCase();
+      var pc = s.includes('andamento') ? 'pill-verde' :
+               s.includes('prevista')  ? 'pill-ouro'  :
+               s.includes('concluí')   ? 'pill-azul'  : 'pill-cinza';
+      return '<div class="obra-item">' +
+        '<div style="flex:1">' +
+          '<div class="obra-nome">' + o.nome + '</div>' +
+          '<div class="obra-detalhe">' + (o.tipo||'') + ' · ' + (o.detalhe||'') + '</div>' +
+          '<span class="pill ' + pc + '">' + (o.status||'') + '</span>' +
+        '</div>' +
+        '<div class="obra-valor">' + (o.valor||'N/D') + '</div>' +
+      '</div>';
     }).join('');
+
+    // Comparativo
+    var comp = d.comparativo || {};
+    var barras = [
+      { label: 'Seu CEP',       perc: comp.seu_cep_perc    || 0,   cls: 'fill-local'  },
+      { label: 'Média SP',      perc: comp.media_sp_perc   || 50,  cls: 'fill-media'  },
+      { label: comp.melhor_bairro || 'Melhor bairro', perc: 100,   cls: 'fill-centro' }
+    ];
+    var maxVal = Math.max(...barras.map(b => b.perc), 1);
+    document.getElementById('r-comparativo').innerHTML =
+      barras.map(b => {
+        var w = Math.round((b.perc / maxVal) * 100);
+        return '<div class="comp-barra-wrap">' +
+          '<div class="comp-label"><span>' + b.label + '</span><span>' + b.perc + '%</span></div>' +
+          '<div class="comp-barra"><div class="comp-barra-fill ' + b.cls + '" style="width:' + w + '%"></div></div>' +
+        '</div>';
+      }).join('') +
+      (comp.conclusao ? '<div class="comp-conclusao">📌 ' + comp.conclusao + '</div>' : '');
+
+    window._zapMsg = (d.whatsapp_msg || '') + '\n\n🔍 Zelador Cívico — zelador.civic';
+    document.getElementById('resultados').style.display = 'block';
+    document.getElementById('resultados').scrollIntoView({ behavior: 'smooth' });
   }
 
-  // Obras
-  var obras = d.obras || [];
-  document.getElementById('r-obras-lista').innerHTML = obras.map(function(o) {
-    var s = (o.status || '').toLowerCase();
-    var pillClass = s.includes('andamento') ? 'pill-verde' :
-                    s.includes('prevista')   ? 'pill-ouro'  :
-                    s.includes('concluída') || s.includes('concluida') ? 'pill-azul' : 'pill-cinza';
-    return '<div class="obra-item">' +
-      '<div style="flex:1">' +
-        '<div class="obra-nome">' + o.nome + '</div>' +
-        '<div class="obra-detalhe">' + (o.tipo || '') + ' · ' + (o.detalhe || '') + '</div>' +
-        '<span class="pill ' + pillClass + '">' + (o.status || '') + '</span>' +
-      '</div>' +
-      '<div class="obra-valor">' + (o.valor || 'N/D') + '</div>' +
-    '</div>';
-  }).join('');
+  // ── AÇÕES ─────────────────────────────────────────────────────────
+  function enviarWhatsApp() {
+    var msg = window._zapMsg || 'Zelador Cívico: consulte os investimentos do seu bairro!';
+    window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+  }
 
-  // Comparativo
-  var comp = d.comparativo || {};
-  var barras = [
-    { label: 'Seu CEP', perc: comp.seu_cep_perc || 0, cls: 'fill-local' },
-    { label: 'Média SP', perc: comp.media_sp_perc || 50, cls: 'fill-azul' },
-    { label: comp.melhor_bairro || 'Melhor bairro', perc: comp.melhor_bairro_perc || 100, cls: 'fill-centro' }
-  ];
-  var maxVal = Math.max(...barras.map(b => b.perc), 1);
-  document.getElementById('r-comparativo').innerHTML =
-    barras.map(function(b) {
-      var w = Math.round((b.perc / maxVal) * 100);
-      return '<div class="comp-barra-wrap">' +
-        '<div class="comp-label"><span>' + b.label + '</span><span>' + b.perc + '%</span></div>' +
-        '<div class="comp-barra"><div class="comp-barra-fill ' + b.cls + '" style="width:' + w + '%"></div></div>' +
-      '</div>';
-    }).join('') +
-    (comp.conclusao ? '<div class="comp-conclusao">📌 ' + comp.conclusao + '</div>' : '');
-
-  // Exibe tudo
-  document.getElementById('resultados').style.display = 'block';
-  document.getElementById('resultados').scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-  // Atualiza botão whatsapp
-  window._zapMsg = (d.whatsapp_msg || '') + '\n\n🔍 Consultado em Zelador Cívico';
-}
-
-// ─── AÇÕES ────────────────────────────────────────────────────────────────
-function enviarWhatsApp() {
-  var msg = window._zapMsg || 'Zelador Cívico: consulte os investimentos do seu bairro!';
-  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
-}
-
-function gerarRelatorio() {
-  if (!dadosCache) { alert('Faça uma consulta primeiro.'); return; }
-  var d = dadosCache.dados;
-  var e = dadosCache.endereco;
-  var txt = '=== ZELADOR CÍVICO — RELATÓRIO TERRITORIAL ===\n\n'
-    + 'CEP: ' + dadosCache.cep + '\n'
-    + 'Bairro: ' + d.bairro + '\n'
-    + 'Subprefeitura: ' + d.subprefeitura + '\n'
-    + 'Logradouro: ' + (e.logradouro || '—') + '\n\n'
-    + '── MÉTRICAS ──\n'
-    + 'Total de obras: ' + d.total_obras + '\n'
-    + 'Investimento previsto: ' + d.investimento_total + '\n'
-    + 'Retorno local: ' + d.retorno_percentual + '%\n'
-    + 'Disparidade: ' + d.disparidade_label + '\n\n'
-    + '── ANÁLISE ──\n' + d.analise + '\n\n'
-    + '── OBRAS ──\n'
-    + (d.obras || []).map(function(o,i) {
-        return (i+1)+'. '+o.nome+' ('+o.status+') — '+o.valor+'\n   '+o.detalhe;
-      }).join('\n') + '\n\n'
-    + '── ALERTAS ──\n'
-    + (d.alertas || []).map(function(a) { return '• ['+a.tipo.toUpperCase()+'] '+a.titulo+': '+a.descricao; }).join('\n') + '\n\n'
-    + '── COMPARATIVO ──\n' + (d.comparativo ? d.comparativo.conclusao : '') + '\n\n'
-    + 'Fonte: ViaCEP + Dados Abertos PMSP + IA\nGerado em: ' + new Date().toLocaleString('pt-BR');
-
-  var blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement('a');
-  a.href = url;
-  a.download = 'relatorio-zelador-civico-' + dadosCache.cep.replace('-','') + '.txt';
-  a.click();
-  URL.revokeObjectURL(url);
-}
+  function gerarRelatorio() {
+    if (!dadosCache) { alert('Faça uma consulta primeiro.'); return; }
+    var d = dadosCache.dados, e = dadosCache.endereco;
+    var txt = '=== ZELADOR CÍVICO — RELATÓRIO TERRITORIAL ===\n\n'
+      + 'CEP: ' + dadosCache.cep + '\n'
+      + 'Bairro: ' + d.bairro + '\n'
+      + 'Subprefeitura: ' + d.subprefeitura + '\n'
+      + 'Logradouro: ' + (e.logradouro||'—') + '\n\n'
+      + '── MÉTRICAS ──\n'
+      + 'Total de obras: ' + d.total_obras + '\n'
+      + 'Investimento: ' + d.investimento_total + '\n'
+      + 'Retorno local: ' + d.retorno_percentual + '%\n'
+      + 'Disparidade: ' + d.disparidade_label + '\n\n'
+      + '── ANÁLISE ──\n' + d.analise + '\n\n'
+      + '── OBRAS ──\n'
+      + (d.obras||[]).map((o,i) => (i+1)+'. '+o.nome+' ('+o.status+') — '+o.valor+'\n   '+o.detalhe).join('\n')
+      + '\n\n── ALERTAS ──\n'
+      + (d.alertas||[]).map(a => '• ['+a.tipo.toUpperCase()+'] '+a.titulo+': '+a.descricao).join('\n')
+      + '\n\nGerado em: ' + new Date().toLocaleString('pt-BR');
+    var blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'relatorio-zelador-' + dadosCache.cep.replace('-','') + '.txt';
+    a.click();
+  }
 </script>
 </body>
 </html>
